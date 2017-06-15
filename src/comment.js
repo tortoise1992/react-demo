@@ -11,6 +11,21 @@ class App extends Component {
             comments:[]
         }
     }
+    componentWillMount (){
+        this._loadComents()
+    }
+    _loadComents (){
+        let comments=localStorage.getItem('comments');
+        if(comments){
+            comments=JSON.parse(comments);
+            this.setState({
+                comments
+            })
+        }
+    }
+    _saveComments (comments){
+        localStorage.setItem('comments',JSON.stringify(comments));
+    }
     render () {
         return (
             <div className="wrapper">
@@ -20,10 +35,12 @@ class App extends Component {
         )
     }
     handle (comment) {
+        
         this.state.comments.push(comment);
         this.setState({
             comments:this.state.comments
         })
+        this._saveComments(this.state.comments)
     }
 }
 

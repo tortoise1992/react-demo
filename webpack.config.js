@@ -20,7 +20,7 @@ module.exports={
         // only- 意味着只有成功更新运行代码才会执行热替换(HMR)
 
 
-        './comment.js'
+        './redux.js'
         // 我们 app 的入口文件
     ],
     output:{
