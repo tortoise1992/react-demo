@@ -4,22 +4,8 @@ import Header from './redux/header.js'
 import Content from './redux/content.js'
 import Theme from './redux/themeSwitch.js'
 
-function createStore(reducer){
-    let state=null;
-    const listeners=[];
-    const subscribe=(listener) =>listeners.push(listener);
-    const getState=() =>state;
-    const dispatch=(action) =>{
-        state=reducer(state,action);
-        listeners.forEach((listener) =>listener());
-    }
-    dispatch({})
-    return {
-        getState,
-        subscribe,
-        dispatch
-    }
-}
+import {createStore } from 'redux'
+import {Provider} from 'react-redux'
 
 const themeReducer=(state,action) =>{
     if(!state){
@@ -39,16 +25,8 @@ const themeReducer=(state,action) =>{
 }
 const store=createStore(themeReducer);
 // console.log(store)
-
-class App extends Component {
-    static childContextTypes={
-        store:PropTypes.object
-    }
-    getChildContext (){
-        return {
-            store
-        }
-    }
+console.log(store)
+class App extends Component {    
     render (){
         return (
             <div>
@@ -60,10 +38,10 @@ class App extends Component {
     }
 }
 
-
-
-
 ReactDOM.render(
-  <App/>,
+    <Provider  store={store}>
+        <App/>
+    </Provider>
+ ,
   document.getElementById('root')
 )
